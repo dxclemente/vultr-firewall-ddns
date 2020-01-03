@@ -1,6 +1,6 @@
 # vultrFirewallDynamicDNS
 
-| **CREDITS**|
+**CREDITS**
 | --- | --- |
 | **MBRCTV** | https://github.com/MBRCTV/VultrFirewallDynamicDNS |
 | **andyjsmith** | https://github.com/andyjsmith/Vultr-Dynamic-DNS |
