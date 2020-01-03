@@ -1,10 +1,10 @@
 # vultrFirewallDynamicDNS
 
-|**CREDITS**|
+**CREDITS**
 |**MBRCTV**|https://github.com/MBRCTV/VultrFirewallDynamicDNS|
 |**andyjsmith**|https://github.com/andyjsmith/Vultr-Dynamic-DNS|
 
-**Vultr API Referenfe**https://www.vultr.com/api/
+**Vultr API Referenfe**: https://www.vultr.com/api/
 
 **1.** Enable Vultr API in **Account** Menu, API Option.
 **2.** Get **Group IDs** you want to always update the IP address
