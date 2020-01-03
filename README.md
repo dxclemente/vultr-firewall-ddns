@@ -30,8 +30,10 @@ SmartyPants converts ASCII punctuation characters into "smart" typographic punct
 
 ## Scheduler Setup
 **Create a task in Task Scheduler to run whatever time interval you want.**
+
 Follow the Microsoft guide for basic task creation.
-Open Task Scheduler and click "Create Task...".
-Give it a name and create a new trigger.
-Click "Daily". Under "Advanced Settings" click to repeat the task every 30 minutes and change "for a duration of" to "Indefinitely".
+
+- Open Task Scheduler and click "Create Task...".
+- Give it a name and create a new trigger.
+- Click "Daily". Under "Advanced Settings" click to repeat the task every 30 minutes and change "for a duration of" to "Indefinitely".
 Add a new action to start a program and browse to your Python executable. Add the ddns.py script as an argument.
