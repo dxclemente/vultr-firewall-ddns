@@ -1,0 +1,7 @@
+{
+	"api_key": "Vultr API Key",
+	"firewallgroupids": [""],
+	"user": "Name Add in firewall notes",
+	"server_mode": "no",
+	"ddns_domain": "host to be resolved"
+}
