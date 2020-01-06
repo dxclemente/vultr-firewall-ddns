@@ -5,11 +5,8 @@ By MBRCTV
 credit for https://github.com/andyjsmith/Vultr-Dynamic-DNS
 '''
 import requests
-import smtplib
 import json
 import socket
-from email.message import EmailMessage
-from email.headerregistry import Address
 
 # Import the values from the configuration file
 with open("ddns_config.json") as config_file:
@@ -30,8 +27,9 @@ else:
 
 for list_rules in firewallgroupids:
     firewallgroup = list_rules
+    print(list_rules)
     
-    # Get the list of DNS records from Vultr to translate the record name to recordid
+    # Get the list of Firewall records from Vultr to update the ones with user setup in config file
     raw_rules = json.loads(requests.get("https://api.vultr.com/v1/firewall/rule_list?FIREWALLGROUPID=" +
                                         firewallgroup + "&direction=in&ip_type=v4", headers={"API-Key": api_key}).text)                                
 
@@ -47,7 +45,7 @@ for list_rules in firewallgroupids:
             v_subnet = raw_rules[rule]["subnet"]
             v_ip = v_subnet
 
-    # Cancel if no records from Vultr match the config file
+    # Cancel if no firewall records from Vultr match with user parameter in the config file, there's no rule to update
     if len(v_ip) == 0:
         print("Configuration error, no ip found for this user.")
         quit()
@@ -61,35 +59,32 @@ for list_rules in firewallgroupids:
     if not needsUpdated:
         print("your ip is: " + ip +
             " \nIP address has not changed. No rules have been updated.")
-        #quit()
-
-    print("your IP has changed since last checking.")
-    print("Old IP on Vultr: " + v_ip + ", current Device IP: " + ip)
-
-    # Remove old Firewall rule
-    payload = {"FIREWALLGROUPID": firewallgroup, "rulenumber": v_rulenumber}
-    response = requests.post("https://api.vultr.com/v1/firewall/rule_delete",
-                            data=payload, headers={"API-Key": api_key})
-    if response.status_code == 200:
-        print("Current rule for " + user + " has been deleted")
     else:
-        print("Error deleting rule")
-        #quit()
+        print("your IP has changed since last checking.")
+        print("Old IP on Vultr: " + v_ip + ", current Device IP: " + ip)
 
-    # Update the rule in Vultr with the new IP address
-    payload = {"FIREWALLGROUPID": firewallgroup,
-            "direction": "in",
-                            "ip_type": "v4",
-                            "protocol": v_protocol,
-                            "subnet": ip,
-                            "subnet_size": v_subnet_size,
-                            "port": v_port,
-                            "notes": v_notes}
-    response = requests.post("https://api.vultr.com/v1/firewall/rule_create",
-                            data=payload, headers={"API-Key": api_key})
-    if response.status_code == 200:
-        print("user " + user + " has been updated to " + ip)
-    else:
-        print("Error adding rule")
-        #quit()
+        # Remove old Firewall rule
+        payload = {"FIREWALLGROUPID": firewallgroup, "rulenumber": v_rulenumber}
+        response = requests.post("https://api.vultr.com/v1/firewall/rule_delete",
+                                data=payload, headers={"API-Key": api_key})
+        if response.status_code == 200:
+            print("Current rule for " + user + " has been deleted")
+        else:
+            print("Error deleting rule")
+
+        # Update the rule in Vultr with the new IP address
+        payload = {"FIREWALLGROUPID": firewallgroup,
+                "direction": "in",
+                                "ip_type": "v4",
+                                "protocol": v_protocol,
+                                "subnet": ip,
+                                "subnet_size": v_subnet_size,
+                                "port": v_port,
+                                "notes": v_notes}
+        response = requests.post("https://api.vultr.com/v1/firewall/rule_create",
+                                data=payload, headers={"API-Key": api_key})
+        if response.status_code == 200:
+            print("user " + user + " has been updated to " + ip)
+        else:
+            print("Error adding rule")  
 quit()
