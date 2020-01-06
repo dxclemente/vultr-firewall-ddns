@@ -50,7 +50,7 @@ for list_rules in firewallgroupids:
     # Cancel if no records from Vultr match the config file
     if len(v_ip) == 0:
         print("Configuration error, no ip found for this user.")
-        #quit()
+        quit()
 
     # Check if the IP address actually differs from any of the records
     needsUpdated = False
