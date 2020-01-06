@@ -1,7 +1,5 @@
 ## Credits
 
-SmartyPants converts ASCII punctuation characters into "smart" typographic punctuation HTML entities. For example:
-
 |                Author                          |Profile                         
 |----------------|-------------------------------|
 |**MBRCTV**|https://github.com/MBRCTV/VultrFirewallDynamicDNS            |
